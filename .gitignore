@@ -239,7 +239,7 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,python,gradle,venv
 
-.vscode/*
+*/.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
