@@ -47,7 +47,7 @@ if "code" not in query_params:
     """, unsafe_allow_html=True)
 else:
     # Authorization code received
-    auth_code = query_params["code"][0]
+    auth_code = query_params["code"]
     st.success("Authorization successful! Exchanging token...")
 
     # Exchange authorization code for access token
@@ -64,6 +64,17 @@ else:
         access_token = tokens["access_token"]
         st.success("Access token obtained successfully!")
         st.write(f"Access Token: {access_token}")
+        
+        # Testing getting top 5 songs
+        SPOTIFY_TRACKS_URL = f"https://api.spotify.com/v1/me/top/tracks?access_token={access_token}" # Replace tracks with artists for artists instead
+        req = {
+            "token": access_token,
+            "time_range": "short_term", # This should stay the same unless you want a larger range of time to pull user info from
+            "limit": "10", # This can be user-controlled
+            "offset": "0" # This should always stay the same
+        }
+        tracks = requests.get(SPOTIFY_TRACKS_URL, req)
+        st.write(tracks.json()["items"])
     else:
         st.error("Failed to obtain access token. Please try again.")
 
