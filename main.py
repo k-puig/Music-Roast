@@ -1,5 +1,5 @@
 import streamlit as st
-from spotify_auth import homepage
+from Homepage import homepage
 from settings import settings_page
 from results import results_page
 

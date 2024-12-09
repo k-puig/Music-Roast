@@ -186,7 +186,7 @@ def settings_page():
             data = pd.DataFrame({
                 'Rank': range(1, num_items + 1),
                 'Artist': [f"Example Artist {i}" for i in range(1, num_items + 1)],
-                'Genre': ["Pop", "Rock", "Hip-Hop", "Jazz", "Electronic", "Country"] * 10,
+                'Genre': (["Pop", "Rock", "Hip-Hop", "Jazz", "Electronic", "Country"] * 10)[0:num_items],
                 'Monthly Listeners': [1000000 - i * 50000 for i in range(num_items)]
             })
             st.dataframe(data, hide_index=True)
@@ -194,6 +194,8 @@ def settings_page():
         # Generate button with API integration
         if st.button("Generate Critique 🔥", use_container_width=True):
             try:
+                st.session_state["roast_text"] = ""
+                del st.session_state["roast_text"]
                 with st.spinner("Analyzing your questionable music taste..."):
                     # Check for access token
                     if "access_token" not in st.session_state:
@@ -216,6 +218,7 @@ def settings_page():
 
                     st.success("Analysis complete! Proceeding to Critique...")
                     st.session_state["page"] = "results"
+                    st.rerun()
 
             except Exception as e:
                 st.error(f"Oops! Something went wrong: {str(e)}")

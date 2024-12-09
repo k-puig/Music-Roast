@@ -10,32 +10,35 @@ def generate_roast(data, roast_style, roast_length):
 
     # Convert DataFrame to readable format
     data_str = data.to_string()
-
+    
     # Adjust token length based on roast length
-    max_tokens = {
+    word_count = {
         "Short & Sweet": 100,
-        "Medium": 200,
-        "Fully Judged": 400
+        "Medium": 400,
+        "Fully Judged": 1600
     }
-
+    
     # Create prompt based on analysis type
     prompt = f"""Given this user's music taste data:
     {data_str}
-
-    Generate a humorous critique/roast of their music taste. 
+    
+    Generate a humorous and scathing roast of their music taste. 
     Style instruction: {roast_style if roast_style else 'Standard roast'}
-
+    
     Make specific references to the artists/songs and their genres.
-    Keep it playful and not mean-spirited."""
-
+    You can be as insulting as you want, but keep it humorous, especially for the person being roasted.
+    
+    You are only allowed to write up to {word_count[roast_length]} words in total.
+    Do not write more than {word_count[roast_length]} words in your roast."""
+    
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a witty music critic with a sense of humor."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=max_tokens[roast_length],
+            #max_tokens=max_tokens[roast_length],
             temperature=0.7
         )
         return response.choices[0].message.content
