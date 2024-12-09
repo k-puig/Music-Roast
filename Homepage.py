@@ -5,7 +5,6 @@ import urllib.parse
 # Spotify credentials
 SPOTIFY_CLIENT_ID = "*************************"
 SPOTIFY_CLIENT_SECRET = "********************"
-REDIRECT_URI = "http://localhost:8501"
 REDIRECT_URI = "https://crit.kpuig.net"
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
